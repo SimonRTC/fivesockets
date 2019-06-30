@@ -22,7 +22,8 @@
 
         private function functions() {
             return [
-                'GetVehiclesList' => function($functions, $ids) { $functions->GetVehiclesList($ids); }
+                'GetVehiclesList'           => function($functions, $ids) { $functions->GetVehiclesList($ids); },
+                'GetVehiclesServiceList'    => function($functions, $ids) { $functions->GetVehiclesServiceList($ids); }
             ];
         }
 

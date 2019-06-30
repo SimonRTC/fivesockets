@@ -16,7 +16,7 @@
                 $response = $response->call();
                 $HttpResponse = $tunker->getHttpResponseObject();
                 $fivem->setHttpResponse($HttpResponse);
-                $response(new fivesockets\functions($fivem), ($fivem->needReponseObject() ? $fivem->getReponseObjects(): null));
+                $response(new fivesockets\functions($fivem), ($fivem->needReponseObject() ? $fivem->getReponseObjects(): false));
             }
         }
     }
