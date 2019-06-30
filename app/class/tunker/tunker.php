@@ -8,6 +8,12 @@
         private $global;
         private $container;
 
+        /**
+       * 
+       * Constructor
+       *
+       */
+
         public function __construct() {
             $this->global   = [
                 'PDO'           => function($host = 'localhost', $database = 'fivesockets', $charset = 'utf8mb4', $username = 'root', $password = null, $options = null) { return new \PDO("mysql:host=$host;dbname=$database;charset=$charset", $username, $password, $options); },
@@ -21,6 +27,14 @@
             ];
         }
 
+        /**
+         * 
+         * Generate json reponse for client
+         * 
+         * @param array $response Client request response
+         * @param int $type Http reponse code (200, 404, 403, ...)
+         */
+
         private function formatCallback($response, $type = 200) {
             $response = [
                 'http_response' => $type,
@@ -32,11 +46,24 @@
             return $response;
         }
 
+        /**
+         * 
+         * Return http callback object for call in "fivesockets/functions"
+         * 
+         */
+
         public function getHttpResponseObject() {
             return function($response) {
                 echo $this->encrypt($this->formatCallback($response));
             };
         }
+
+        /**
+         * 
+         * Get credentials on database
+         * 
+         * @param string $public Public credentials key (can be "false" but not return servers secrets !)
+         */
 
         private function getCredentialsFromDatabase($public = false) {
             if ($this->global['PDO']) {
@@ -55,9 +82,17 @@
             }
         }
 
+        /**
+         * Use for define token in "index.php"
+         */
+
         public function setToken($token) {
             $this->token = $token;
         }
+
+        /**
+         * Check if the token (public-credential) is valid
+         */
 
         public function isGranted() {
             $found = $this->getCredentialsFromDatabase($this->token);
@@ -65,20 +100,45 @@
             return ($found == false ? false: true);
         }
 
+        /**
+         * Check if "setGlobalConfiguration" as format error
+         * @ (!!! In development !!!) @
+         */
+
         private function IsConfigurationCompliant($global) {
             return true; /* In development */
         }
 
+        /**
+         * 
+         * Set configuration
+         * 
+         * @param array $global Global configuraion
+         */
         public function setGlobalConfiguration($global) {
             if ($this->IsConfigurationCompliant($global)) {
                 $this->global = $global;
             }
         }
 
+        /**
+         *
+         * Decrypt the client request
+         *  
+         * @param string $response "GET" crypted request
+         */
+
         public function getRealRequest($request) {       
             if (empty($this->container)) { $this->getCredentialsFromDatabase($this->token); }
             return $this->decrypt($request);
         }
+
+        /**
+         * 
+         * encrypt data
+         * 
+         * @param string $value encrypt
+         */
 
         private function encrypt($value) {
             if (!empty($this->container)) {
@@ -95,6 +155,13 @@
                 ));
             }
         }
+
+        /**
+         * 
+         * deencrypt data
+         * 
+         * @param string $value deencrypt
+         */
         
         private function decrypt($value) {
             if (!empty($this->container)) {

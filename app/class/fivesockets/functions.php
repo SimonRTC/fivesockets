@@ -6,10 +6,23 @@
 
         private $FiveM;
 
+        /**
+       * 
+       * Constructor
+       *
+       * @param object $FiveM FiveM object class
+       */
+
         public function __construct($FiveM) {
             $this->FiveM    = $FiveM;
             $this->PDO      = $FiveM->global['PDO']();
         }
+
+        /**
+         * Get player(s) vehicles
+         * 
+         * @param array $ids Player identifiers (Not required can be "false")
+         */
 
         public function GetVehiclesList($ids) {
             if ($ids != false) { $steam_id = $this->FiveM->getKeyFromIds('steam', $ids); }
@@ -24,6 +37,12 @@
             $http_response = $this->FiveM->http_response;
             $http_response($vehicles);
         }
+
+        /**
+         * Get player(s) vehicles service (Job)
+         * 
+         * @param array $ids Player identifiers (Not required can be "false")
+         */
 
         public function GetVehiclesServiceList($ids) {
             if ($ids != false) { $steam_id = $this->FiveM->getKeyFromIds('steam', $ids); }
