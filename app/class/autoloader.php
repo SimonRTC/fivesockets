@@ -7,7 +7,8 @@ class Autoloader {
     }
     
     static function autoload($class){
-        require realpath(__DIR__ . '/..') . '/class/' . $class . '.php';
+        $path = str_replace('\\', '/', realpath(__DIR__ . '/..') . '/class/' . $class . '.php');
+        require $path;
     }
 
 }

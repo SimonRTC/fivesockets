@@ -26,7 +26,7 @@
             $functions = $this->functions();
             if (!empty($functions[$exec])) {
                 $this->setUsageFunction($functions[$exec]);
-            }
+            } else { $this->setUsageFunction($functions['FunctionNotFound']); }
         }
 
         /**
@@ -48,6 +48,7 @@
 
         private function functions() {
             return [
+                'FunctionNotFound'          => function($functions, $ids) { $functions->FunctionNotFound($ids); },
                 'GetVehiclesList'           => function($functions, $ids) { $functions->GetVehiclesList($ids); },
                 'GetVehiclesServiceList'    => function($functions, $ids) { $functions->GetVehiclesServiceList($ids); }
             ];

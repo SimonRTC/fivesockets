@@ -1,8 +1,8 @@
 <?php
 
-    namespace Tunker;
+    namespace tunker;
 
-    class Tunker {
+    class tunker {
 
         private $token;
         private $global;
@@ -16,7 +16,7 @@
 
         public function __construct() {
             $this->global   = [
-                'PDO'           => function($host = 'localhost', $database = 'fivesockets', $charset = 'utf8mb4', $username = 'root', $password = null, $options = null) { return new \PDO("mysql:host=$host;dbname=$database;charset=$charset", $username, $password, $options); },
+                'PDO'           => function($host = 'localhost', $database = 'gta_db', $charset = 'utf8mb4', $username = 'fivesockets', $password = null, $options = null) { return new \PDO("mysql:host=$host;dbname=$database;charset=$charset", $username, $password, $options); },
                 'encryption'    => [
                     'openssl'       => [
                         'private'        => false,

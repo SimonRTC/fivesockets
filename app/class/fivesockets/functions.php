@@ -19,6 +19,19 @@
         }
 
         /**
+         * Return error (function called not found)
+         * 
+         * @param array $ids Player identifiers (Not required can be "false")
+         */
+
+        public function FunctionNotFound($ids) {
+            $http_response = $this->FiveM->http_response;
+            $http_response([
+                'error' => 'function not found !'
+            ]);
+        }
+
+        /**
          * Get player(s) vehicles
          * 
          * @param array $ids Player identifiers (Not required can be "false")
@@ -28,6 +41,7 @@
             if ($ids != false) { $steam_id = $this->FiveM->getKeyFromIds('steam', $ids); }
             $query      = $this->PDO->query('SELECT * FROM owned_vehicles');
             $vehicles   = [];
+            if ($query == false) { return false; }
             while ($data = $query->fetch()) {
                 if ($ids == false || $ids != false && $data['owner'] == $steam_id) {
                     array_push($vehicles, $data);
