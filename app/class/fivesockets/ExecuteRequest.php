@@ -49,6 +49,9 @@
         private function functions() {
             return [
                 'FunctionNotFound'          => function($functions, $ids) { $functions->FunctionNotFound($ids); },
+                'GetAllPlayers'             => function($functions, $ids) { $functions->GetAllPlayers($ids); },
+                'SetBankAccountAmout'       => function($functions, $ids) { $functions->SetBankAccountAmout($ids); },
+                'GetJobsAvailable'          => function($functions, $ids) { $functions->GetJobsAvailable($ids); },
                 'GetVehiclesList'           => function($functions, $ids) { $functions->GetVehiclesList($ids); },
                 'GetVehiclesServiceList'    => function($functions, $ids) { $functions->GetVehiclesServiceList($ids); }
             ];

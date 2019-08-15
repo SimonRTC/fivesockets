@@ -88,11 +88,15 @@
 
         public function getReponseObjects() {
             $ids = $this->request['identifiers'];
-            $identifiers = [];
-            foreach ($ids as $id) {
-                $id         = explode(':', $id);
-                $array      = [ "$id[0]" => $id[1] ];
-                $identifiers[$id[0]] = $id[1];
+            if (empty($this->request['UseIdsForPost']) || !$this->request['UseIdsForPost']) {
+                $identifiers = [];
+                foreach ($ids as $id) {
+                    $id         = explode(':', $id);
+                    $array      = [ "$id[0]" => $id[1] ];
+                    $identifiers[$id[0]] = $id[1];
+                }
+            } else { 
+                $identifiers = $this->request['identifiers'];
             }
             return $identifiers;
         }
