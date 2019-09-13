@@ -51,9 +51,11 @@
                 'FunctionNotFound'          => function($functions, $ids) { $functions->FunctionNotFound($ids); },
                 'GetAllPlayers'             => function($functions, $ids) { $functions->GetAllPlayers($ids); },
                 'SetBankAccountAmout'       => function($functions, $ids) { $functions->SetBankAccountAmout($ids); },
+                'GetAddonAccountData'       => function($functions, $ids) { $functions->GetAddonAccountData($ids); },
                 'GetJobsAvailable'          => function($functions, $ids) { $functions->GetJobsAvailable($ids); },
                 'GetVehiclesList'           => function($functions, $ids) { $functions->GetVehiclesList($ids); },
-                'GetVehiclesServiceList'    => function($functions, $ids) { $functions->GetVehiclesServiceList($ids); }
+                'GetVehiclesServiceList'    => function($functions, $ids) { $functions->GetVehiclesServiceList($ids); },
+                'SendTaxeToCompanies'       => function($functions, $ids) { $functions->SendTaxeToCompanies($ids); }
             ];
         }
 

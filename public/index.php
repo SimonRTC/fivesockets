@@ -5,10 +5,11 @@
     if (!empty($_GET['token']) && !empty($_GET['request'])) {
         $token      = $_GET['token'];
         $request    = $_GET['request'];
-        $tunker     = new tunker\tunker;
+        $PDO        = $PDO();
+        $tunker     = new tunker\tunker($PDO);
         $tunker->setToken($token);
         if ($tunker->isGranted()) {
-            $fivem      = new fivesockets\fivem;
+            $fivem      = new fivesockets\fivem($PDO);
             $request    = $tunker->getRealRequest(urlencode($request));
             $interpret  = $fivem->interpret($request);
             if ($interpret != false) {

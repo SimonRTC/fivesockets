@@ -1,3 +1,6 @@
 # Run local PHP server (for tests) #
 ###################
 autorun.bat
+
+## Server Config
+/app/config.php

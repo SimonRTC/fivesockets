@@ -42,7 +42,7 @@
             $query      = $this->PDO->query('SELECT * FROM users');
             $players    = [];
             while ($data = $query->fetch()) {
-                if ($ids == false || $ids != false && $data['owner'] == $steam_id) {
+                if ($ids == false || $ids != false && $data['identifier'] == $steam_id) {
                     array_push($players, $data);
                 }
             }
@@ -58,18 +58,35 @@
          */
 
         public function SetBankAccountAmout($ids) {
-            
-            /**
-             * ids
-             * 
-             * @param bank_account bank account name
-             * @param owner steam id
-             * @param amount Init for new account amount
-             * 
-             */
-
+            $sql = 'UPDATE users SET ' . ($ids['account'] == 'bank'? 'bank': 'money') . ' = "' . ((string)$ids['amount']) . '" WHERE identifier = "' . $ids['identifier'] . '"';
+            $cb = $this->PDO->exec($sql);
+            $cb = [
+                'account'   => $ids['account'],
+                'amount'    => $ids['amount'],
+                'callback'  => ($cb != false? true: false)
+            ];
             $http_response = $this->FiveM->http_response;
-            $http_response(false);
+            $http_response($cb);
+        }
+
+        /**
+         * Update player bank account by specific values
+         * 
+         * @param array $ids Player bank accounts informations and values for update
+         */
+
+        public function GetAddonAccountData($ids) {
+            if ($ids != false) { $steam_id = $this->FiveM->getKeyFromIds('steam', $ids); }
+            $query          = $this->PDO->query('SELECT * FROM addon_account_data');
+            $AddonAccount   = [];
+            while ($data = $query->fetch()) {
+                if ($ids == false || $ids != false && $data['owner'] == $steam_id) {
+                    array_push($AddonAccount, $data);
+                }
+            }
+            (empty($AddonAccount) ? $AddonAccount = false: $AddonAccount = $AddonAccount);
+            $http_response = $this->FiveM->http_response;
+            $http_response($AddonAccount);
         }
 
         /**
@@ -128,6 +145,27 @@
             (empty($vehicles) ? $vehicles = false: $vehicles = $vehicles);
             $http_response = $this->FiveM->http_response;
             $http_response($vehicles);
+        }
+
+         /**
+         * Send taxe to companies
+         * 
+         * @param array $ids companies and taxes
+         */
+
+        public function SendTaxeToCompanies($ids) {
+            $success = [];
+            foreach ($ids as $i=>$society) {
+                $update = ((($society['money']*$society['taxe'])/100));
+                $update = $society['money']-$update;
+                $update = (string)round($update);
+                if ($update != '0') {
+                    $cb = $this->PDO->exec('UPDATE addon_account_data SET money = "' . $update . '" WHERE account_name = "' . $society['society'] . '"');
+                } else { $cb = true; }
+                $ids[$i] = array_merge($ids[$i], [ 'success' => ($cb != false? true: false) ]);
+            }
+            $http_response = $this->FiveM->http_response;
+            $http_response($ids);
         }
 
     }

@@ -14,9 +14,9 @@
        *
        */
 
-        public function __construct() {
+        public function __construct(Object $PDO) {
             $this->global   = [
-                'PDO'           => function($host = 'localhost', $database = 'gta_db', $charset = 'utf8mb4', $username = 'fivesockets', $password = null, $options = null) { return new \PDO("mysql:host=$host;dbname=$database;charset=$charset", $username, $password, $options); },
+                'PDO'           => $PDO,
                 'encryption'    => [
                     'openssl'       => [
                         'private'        => false,
