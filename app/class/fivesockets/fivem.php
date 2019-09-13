@@ -19,7 +19,7 @@
        *
        */
 
-        public function __construct(Object $PDO) {
+        public function __construct($PDO) {
             $this->global   = [
                 'PDO'           => $PDO,
             ];
