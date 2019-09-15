@@ -59,7 +59,7 @@
          *
          * Add http callback to constructor
          * 
-         * @param object Http Tunker response object  
+         * @param object Http encryption response object  
          */
 
         public function setHttpResponse($http_response) {

@@ -147,11 +147,11 @@
             $http_response($vehicles);
         }
 
-         /**
-         * Send taxe to companies
-         * 
-         * @param array $ids companies and taxes
-         */
+        /**
+        * Send taxe to companies
+        * 
+        * @param array $ids companies and taxes
+        */
 
         public function SendTaxeToCompanies($ids) {
             $success = [];
@@ -166,6 +166,27 @@
             }
             $http_response = $this->FiveM->http_response;
             $http_response($ids);
+        }
+
+        
+        /**
+        * Get whitelisted players
+        * 
+        * @param array $ids steamid
+        */
+
+        public function GetWhitelist($ids) {
+            if ($ids != false) { $steam_id = $this->FiveM->getKeyFromIds('steam', $ids); }
+            $query      = $this->PDO->query('SELECT * FROM whitelist');
+            $players    = [];
+            while ($data = $query->fetch()) {
+                if ($ids == false || $ids != false && $data['identifier'] == $steam_id) {
+                    array_push($players, $data);
+                }
+            }
+            (empty($players) ? $players = false: $players = $players);
+            $http_response = $this->FiveM->http_response;
+            $http_response($players);
         }
 
     }

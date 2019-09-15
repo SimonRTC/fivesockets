@@ -5,22 +5,22 @@
     if (!empty($_GET['token']) && !empty($_GET['request'])) {
         $token      = $_GET['token'];
         $request    = $_GET['request'];
-        $tunker     = new tunker\tunker($PDO);
-        $tunker->setToken($token);
-        if ($tunker->isGranted()) {
+        $encryption     = new encryption\encryption($PDO);
+        $encryption->setToken($token);
+        if ($encryption->isGranted()) {
             $fivem      = new fivesockets\fivem($PDO);
-            $request    = $tunker->getRealRequest(urlencode($request));
+            $request    = $encryption->getRealRequest(urlencode($request));
             $interpret  = $fivem->interpret($request);
             if ($interpret != false) {
                 $response = new fivesockets\ExecuteRequest($fivem->getReponse());
                 $response = $response->call();
-                $HttpResponse = $tunker->getHttpResponseObject();
+                $HttpResponse = $encryption->getHttpResponseObject();
                 $fivem->setHttpResponse($HttpResponse);               
                 $response(new fivesockets\functions($fivem), ($fivem->needReponseObject() ? $fivem->getReponseObjects(): false));
                 exit();
             }
         }
-        $response   = $tunker->getHttpResponseObject();
+        $response   = $encryption->getHttpResponseObject();
         $request    = $response(false);
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-    namespace tunker;
+    namespace encryption;
 
-    class tunker {
+    class encryption {
 
         private $token;
         private $global;
@@ -68,7 +68,7 @@
         private function getCredentialsFromDatabase($public = false) {
             if ($this->global['PDO']) {
                 $PDO        = $this->global['PDO']();
-                $response   = $PDO->query('SELECT * FROM tunker');
+                $response   = $PDO->query('SELECT * FROM encryption');
                 $results    = [];
                 while ($data = $response->fetch()) {
                     if ($public == false) { $data = [ 'public-credential' => $data['public-credential'], 'allowed_ip' => $data['allowed_ip'], 'method' => $data['method'] ]; }
