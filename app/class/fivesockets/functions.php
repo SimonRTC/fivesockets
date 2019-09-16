@@ -189,6 +189,18 @@
             $http_response($players);
         }
 
+        public function AddPlayerToWhitelist($ids) {
+            if (!empty($ids['identifier']) && !empty($ids['name'])) {
+                $request = $this->PDO->prepare("INSERT INTO `whitelist` (identifier, last_connexion, ban_reason, ban_until, vip, id, name) VALUES (:identifier, null, null, null, 0, null, :name)");
+                $cb = $request->execute(array(
+                    "identifier"    => $ids['identifier'], 
+                    "name"          => $ids['name'],
+                ));
+                $http_response = $this->FiveM->http_response;
+                $http_response(($cb? true: false));
+            }
+        }
+
     }
 
 ?>

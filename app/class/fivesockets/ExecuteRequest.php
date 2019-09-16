@@ -51,6 +51,7 @@
                 'FunctionNotFound'          => function($functions, $ids) { $functions->FunctionNotFound($ids); },
                 'GetAllPlayers'             => function($functions, $ids) { $functions->GetAllPlayers($ids); },
                 'GetWhitelist'              => function($functions, $ids) { $functions->GetWhitelist($ids); },
+                'AddPlayerToWhitelist'      => function($functions, $ids) { $functions->AddPlayerToWhitelist($ids); },
                 'SetBankAccountAmout'       => function($functions, $ids) { $functions->SetBankAccountAmout($ids); },
                 'GetAddonAccountData'       => function($functions, $ids) { $functions->GetAddonAccountData($ids); },
                 'GetJobsAvailable'          => function($functions, $ids) { $functions->GetJobsAvailable($ids); },
